@@ -1,4 +1,4 @@
--- Banco: projeto_pets (ajuste o nome se necessário)
+-- Banco: projeto_pets 
 -- Charset: utf8mb4
 
 CREATE DATABASE IF NOT EXISTS projeto_pets

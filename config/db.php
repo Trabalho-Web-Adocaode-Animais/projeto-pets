@@ -7,8 +7,8 @@ declare(strict_types=1);
  */
 const DB_HOST = 'localhost';
 const DB_NAME = 'projeto_pets';
-const DB_USER = 'root';
-const DB_PASS = '';
+const DB_USER = 'vitor';
+const DB_PASS = 'admin';
 
 function getPdo(): PDO
 {
