@@ -19,7 +19,7 @@ CREATE TABLE usuarios (
   UNIQUE KEY uk_usuarios_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- pets: FK usuario_id -> usuarios(id); ON DELETE RESTRICT evita órfãos por exclusão acidental do usuário
+-- pets: FK usuario_id -> usuarios(id)
 CREATE TABLE pets (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   usuario_id INT UNSIGNED NOT NULL,
@@ -28,6 +28,7 @@ CREATE TABLE pets (
   porte ENUM('Pequeno', 'Médio', 'Grande') NOT NULL,
   idade INT UNSIGNED NOT NULL,
   descricao TEXT NOT NULL,
+  imagem_url VARCHAR(255) NULL DEFAULT NULL,
   status TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '1 = disponível',
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -35,3 +36,5 @@ CREATE TABLE pets (
   KEY idx_pets_status (status),
   CONSTRAINT fk_pets_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Banco já existente: ALTER TABLE pets ADD COLUMN imagem_url VARCHAR(255) NULL DEFAULT NULL AFTER descricao;

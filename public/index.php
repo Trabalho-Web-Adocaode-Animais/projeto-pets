@@ -6,7 +6,9 @@ session_start();
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/Models/User.php';
+require_once __DIR__ . '/../src/Models/Pet.php';
 require_once __DIR__ . '/../src/Controllers/AuthController.php';
+require_once __DIR__ . '/../src/Controllers/PetController.php';
 
 $rawPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $path = is_string($rawPath) ? $rawPath : '/';
@@ -15,13 +17,22 @@ if ($path === '') {
     $path = '/';
 }
 
-$userModel = new User(getPdo());
+$pdo = getPdo();
+$userModel = new User($pdo);
 $auth = new AuthController($userModel);
 
+$petModel = new Pet($pdo);
+$petController = new PetController($petModel);
+
 match ($path) {
+    '/' => $petController->home(),
     '/cadastro' => $auth->register(),
     '/login' => $auth->login(),
     '/logout' => $auth->logout(),
-    default => require __DIR__ . '/../src/Views/home.php',
+    '/pets/novo' => $petController->create(),
+    '/pets/meus' => $petController->meus(),
+    '/pets/editar' => $petController->edit(),
+    '/pets/status' => $petController->toggleStatus(),
+    default => $petController->home(),
 };
 

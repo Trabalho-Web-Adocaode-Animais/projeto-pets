@@ -101,3 +101,7 @@ O model de usuário usa **PDO com Prepared Statements** em todas as consultas e 
 | `/logout` | Encerra a sessão e redireciona para `/` |
 
 Em Apache com `mod_rewrite` e DocumentRoot em `public`, o `public/.htaccess` encaminha essas URLs ao front controller. No servidor embutido do PHP, use o comando com `public/router.php` indicado em **Como Executar**.
+
+### Pets e URL de imagem
+
+No cadastro e na edição de pets é possível informar uma **URL de imagem** (opcional). Antes de salvar, o servidor valida o valor: campo vazio grava como ausente (NULL); se houver texto, verifica o tamanho (até 255 caracteres) e usa `filter_var` com `FILTER_VALIDATE_URL` para aceitar apenas links válidos. Em caso de URL inválida, uma mensagem amigável é armazenada em `$_SESSION['error']` e o usuário permanece no formulário. Na página inicial, cada card de pet exibe a imagem informada ou o placeholder local “Pet sem foto”; se o link externo falhar ao carregar no navegador, o mesmo placeholder é usado como fallback.
