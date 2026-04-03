@@ -38,3 +38,13 @@ CREATE TABLE pets (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Banco já existente: ALTER TABLE pets ADD COLUMN imagem_url VARCHAR(255) NULL DEFAULT NULL AFTER descricao;
+
+-- vacinas: histórico de vacinação do pet. FK pet_id -> pets(id) com exclusão em cascata
+CREATE TABLE vacinas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pet_id INT UNSIGNED NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    data_aplicacao DATE NOT NULL,
+    proxima_dose DATE DEFAULT NULL,
+    FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE
+);
