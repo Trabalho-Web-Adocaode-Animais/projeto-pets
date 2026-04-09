@@ -73,18 +73,35 @@ final class PetController
             exit;
         }
 
-        $this->pet->save([
-            'usuario_id' => $userId,
-            'nome' => $nome,
-            'especie' => $especie,
-            'porte' => $porte,
-            'idade' => $idade,
-            'descricao' => $descricao,
-            'imagem_url' => $imagemUrl,
-        ]);
+        // Tenta salvar no banco e captura a exceção em caso de falha estrutural
+        try {
+            $this->pet->save([
+                'usuario_id' => $userId,
+                'nome' => $nome,
+                'especie' => $especie,
+                'porte' => $porte,
+                'idade' => $idade,
+                'descricao' => $descricao,
+                'imagem_url' => $imagemUrl,
+            ]);
 
-        header('Location: /pets/meus');
-        exit;
+            header('Location: /pets/meus');
+            exit;
+
+        } catch (\PDOException $e) {
+            // Código 23000 representa falha de restrição de integridade (como FK inválida)
+            if ($e->getCode() === '23000') {
+                unset($_SESSION['user']); // Remove o login inválido
+                $_SESSION['error'] = 'Sua sessão é inválida ou expirou. Por favor, faça login novamente.';
+                header('Location: /login');
+                exit;
+            }
+
+            // Para qualquer outro erro de banco de dados
+            $_SESSION['error'] = 'Ocorreu um erro interno ao salvar o pet. Tente novamente.';
+            header('Location: /pets/novo');
+            exit;
+        }
     }
 
     public function meus(): void
@@ -172,17 +189,23 @@ final class PetController
             exit;
         }
 
-        $this->pet->update($id, [
-            'nome' => $nome,
-            'especie' => $especie,
-            'porte' => $porte,
-            'idade' => $idade,
-            'descricao' => $descricao,
-            'imagem_url' => $imagemUrl,
-        ]);
+        try {
+            $this->pet->update($id, [
+                'nome' => $nome,
+                'especie' => $especie,
+                'porte' => $porte,
+                'idade' => $idade,
+                'descricao' => $descricao,
+                'imagem_url' => $imagemUrl,
+            ]);
 
-        header('Location: /pets/meus');
-        exit;
+            header('Location: /pets/meus');
+            exit;
+        } catch (\PDOException $e) {
+            $_SESSION['error'] = 'Ocorreu um erro interno ao atualizar o pet. Tente novamente.';
+            header('Location: /pets/editar?id=' . $id);
+            exit;
+        }
     }
 
     public function toggleStatus(): void

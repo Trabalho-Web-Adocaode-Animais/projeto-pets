@@ -73,8 +73,13 @@ require __DIR__ . '/../header.php';
                                     <span class="badge text-bg-secondary">Adotado</span>
                                 <?php endif; ?>
                             </p>
+                            
                             <div class="mt-auto d-grid gap-2">
-                                <a href="/pets/editar?id=<?= $petId ?>" class="btn btn-outline-primary">Editar</a>
+                                <div class="d-flex gap-2">
+                                    <a href="/pets/editar?id=<?= $petId ?>" class="btn btn-outline-primary flex-fill">Editar</a>
+                                    <a href="/vacinas?pet_id=<?= $petId ?>" class="btn btn-info text-white flex-fill">Vacinas</a>
+                                </div>
+
                                 <?php if ($disponivel) : ?>
                                     <form method="post" action="/pets/status" onsubmit="return confirm('Marcar este pet como adotado?');">
                                         <input type="hidden" name="id" value="<?= $petId ?>">
@@ -87,7 +92,7 @@ require __DIR__ . '/../header.php';
                                     </form>
                                 <?php endif; ?>
                             </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
             <?php endforeach; ?>
