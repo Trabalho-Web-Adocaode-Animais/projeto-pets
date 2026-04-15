@@ -38,7 +38,7 @@ sudo mariadb
 Execute os comandos SQL abaixo para preparar o ambiente:
 
 SQL
-CREATE DATABASE IF NOT EXISTS petmatch;
+CREATE DATABASE IF NOT EXISTS projeto_pets;
 CREATE USER IF NOT EXISTS 'vitor'@'localhost' IDENTIFIED BY 'suasenha';
 GRANT ALL PRIVILEGES ON petmatch.* TO 'seuusuario'@'localhost';
 FLUSH PRIVILEGES;
@@ -49,7 +49,7 @@ EXIT;
 Com o banco criado, importe o script de tabelas localizado na raiz do projeto:
 
 Bash
-mariadb -u seuusuario -p petmatch < database.sql
+mariadb -u seuusuario -p projeto_pets < database.sql
 
 ⚙️ Configuração do Sistema
 Localize o arquivo config/db.php.
