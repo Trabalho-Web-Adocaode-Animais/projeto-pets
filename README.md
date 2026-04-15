@@ -1,7 +1,7 @@
 
 projeto-pets - Sistema de Doação de Animais
 O projeto-pets é uma aplicação web desenvolvida em PHP para a disciplina de Web Servidor. O objetivo é conectar doadores e adotantes de animais de estimação em uma interface simples e funcional, no estilo de anúncios classificados.
-
+Alunos: Vitor Campos e Arthur Romão
 ----------------------------------------------------------------
 
 🛠️ Tecnologias e Versões
