@@ -99,6 +99,12 @@ O model de usuário usa **PDO com Prepared Statements** em todas as consultas e 
 | `/cadastro` | GET: formulário de registro; POST: validação e gravação do usuário |
 | `/login` | GET: formulário de login; POST: verificação e abertura de sessão |
 | `/logout` | Encerra a sessão e redireciona para `/` |
+| `/pets/novo` | GET: formulário de cadastro de pet; POST: validação e gravação do anúncio |
+| `/pets/meus` | GET: listagem dos pets cadastrados pelo usuário logado |
+| `/pets/editar` | GET: formulário de edição de pet; POST: atualização dos dados ou exclusão |
+| `/pets/status` | POST: alterna o status do pet (entre "Disponível" e "Adotado") |
+| `/vacinas` | GET: exibe o histórico de vacinas de um pet específico (requer `?pet_id=ID`) |
+| `/vacinas/nova` | GET: formulário de registro de vacina; POST: gravação da nova vacina (requer `?pet_id=ID`) |
 
 Em Apache com `mod_rewrite` e DocumentRoot em `public`, o `public/.htaccess` encaminha essas URLs ao front controller. No servidor embutido do PHP, use o comando com `public/router.php` indicado em **Como Executar**.
 
