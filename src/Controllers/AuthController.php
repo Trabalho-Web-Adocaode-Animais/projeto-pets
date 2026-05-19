@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Models/User.php';
-
 final class AuthController
 {
     private const VIEW_REGISTER = __DIR__ . '/../Views/register.php';

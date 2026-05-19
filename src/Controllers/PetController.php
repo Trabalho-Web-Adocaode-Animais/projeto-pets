@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Models/Pet.php';
-
 final class PetController
 {
     private const VIEW_CADASTRO = __DIR__ . '/../Views/pets/cadastro.php';
