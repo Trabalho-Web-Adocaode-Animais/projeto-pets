@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Models/Vaccine.php';
-require_once __DIR__ . '/../Models/Pet.php';
-
 final class VaccineController
 {
     private const VIEW_CADASTRO = __DIR__ . '/../Views/vaccines/cadastro.php';

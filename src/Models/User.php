@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../config/db.php';
-
 final class User
 {
     public function __construct(

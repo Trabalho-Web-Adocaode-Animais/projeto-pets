@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 session_start();
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../src/Models/User.php';
-require_once __DIR__ . '/../src/Models/Pet.php';
-require_once __DIR__ . '/../src/Models/Vaccine.php';
-require_once __DIR__ . '/../src/Controllers/AuthController.php';
-require_once __DIR__ . '/../src/Controllers/PetController.php';
-require_once __DIR__ . '/../src/Controllers/VaccineController.php';
 
 $rawPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $path = is_string($rawPath) ? $rawPath : '/';
