@@ -11,6 +11,8 @@ Banco de Dados: MariaDB / MySQL
 
 Padrão de Arquitetura: MVC Manual (Model-View-Controller)
 
+Gerenciamento de Dependências: Composer (Autoload via `classmap`)
+
 Controle de Sessão: PHP Native Sessions
 
 Ambiente: Linux (Ubuntu/Debian)
@@ -24,15 +26,14 @@ Abra o terminal e instale o PHP e as extensões de banco de dados e strings:
 
 
 sudo apt update
-sudo apt install php-cli php-mysql php-mbstring php-xml php-curl -y
+sudo apt install php-cli php-mysql php-mbstring php-xml php-curl composer -y
 2. Configuração do Banco de Dados
 Instale o servidor de banco de dados:
 
-
 sudo apt install mariadb-server -y
 sudo systemctl start mariadb
-Acesse o console do banco:
 
+Acesse o console do banco:
 
 sudo mariadb
 Execute os comandos SQL abaixo para preparar o ambiente:
@@ -57,6 +58,12 @@ Localize o arquivo config/db.php.
 Certifique-se de que as constantes de conexão (host, dbname, user, password) coincidem com as configurações feitas no passo anterior.
 
 🚀 Como Executar
+Antes de iniciar o servidor pela primeira vez, instale as dependências e mapeie as classes do projeto executando o comando abaixo na raiz:
+
+Bash
+composer install
+composer dump-autoload
+
 Para rodar o projeto utilizando o servidor embutido do PHP, execute na pasta raiz do projeto (projeto-pets) usando o `router.php` para que rotas como `/cadastro` e `/login` funcionem:
 
 Bash
@@ -78,6 +85,8 @@ http://localhost:8000
 /src/Models: Abstração de dados e regras de negócio.
 
 /src/Views: Arquivos de apresentação (HTML/PHP).
+
+/vendor: (Gerada localmente) Bibliotecas externas e dependências gerenciadas pelo Composer. Não é commitada no GitHub.
 
 database.sql: Script de criação das tabelas.
 
