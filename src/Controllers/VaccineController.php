@@ -100,6 +100,28 @@ final class VaccineController
         }
     }
 
+    public function delete(): void 
+    {
+        $userId = $this->requireUserId();
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            header('Location: /pets/meus');
+            exit;
+        }
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        $petId = filter_input(INPUT_POST, 'pet_id', FILTER_VALIDATE_INT);
+
+        if($id !== false && $id !== null && $petId !== false && $petId !== null){
+            $petRow = $this->pet->find($petId);
+            if($petRow !== null && (int) $petRow['usuario_id'] === $userId){
+                $this->vaccine->delete($id);
+            } else {
+                $_SESSION['error'] = 'Acesso negado para remover esta vacina.';
+            }
+        }
+        header('Location: /vacinas?pet_id=' . $petId);
+        exit;
+    }
+
     //Garante que apenas usuários logados acessem essas funções.
     
     private function requireUserId(): int
