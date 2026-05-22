@@ -50,6 +50,7 @@ require __DIR__ . '/../header.php';
                                 <th scope="col" class="ps-4">Vacina</th>
                                 <th scope="col">Data de Aplicação</th>
                                 <th scope="col">Próxima Dose</th>
+                                <th scope="col" class="text-end pe-4">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,16 +60,33 @@ require __DIR__ . '/../header.php';
                                         <?= htmlspecialchars((string) $vacina['nome'], ENT_QUOTES, 'UTF-8') ?>
                                     </td>
                                     <td>
-                                        <?= htmlspecialchars(date('d/m/Y', strtotime((string) $vacina['data_aplicacao'])), ENT_QUOTES, 'UTF-8') ?>
+                                        <?= htmlspecialchars(\Carbon\Carbon::parse((string) $vacina['data_aplicacao'])->format('d/m/Y'), ENT_QUOTES, 'UTF-8') ?>
+                                        <br>
+                                        <small class="text-muted">
+                                            <?= htmlspecialchars(\Carbon\Carbon::parse((string) $vacina['data_aplicacao'])->diffForHumans(), ENT_QUOTES, 'UTF-8') ?>
+                                        </small>
                                     </td>
                                     <td>
                                         <?php if ($vacina['proxima_dose'] !== null) : ?>
-                                            <span class="badge bg-info text-dark">
-                                                <?= htmlspecialchars(date('d/m/Y', strtotime((string) $vacina['proxima_dose'])), ENT_QUOTES, 'UTF-8') ?>
+                                            <span class="badge bg-info text-dark mb-1">
+                                                <?= htmlspecialchars(\Carbon\Carbon::parse((string) $vacina['proxima_dose'])->format('d/m/Y'), ENT_QUOTES, 'UTF-8') ?>
                                             </span>
+                                            <br>
+                                            <small class="text-muted">
+                                                <?= htmlspecialchars(\Carbon\Carbon::parse((string) $vacina['proxima_dose'])->diffForHumans(), ENT_QUOTES, 'UTF-8') ?>
+                                            </small>
                                         <?php else : ?>
                                             <span class="text-muted small">Dose única</span>
                                         <?php endif; ?>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <form action="/vacinas/remover" method="POST" onsubmit="return confirm('Tem certeza que deseja remover esta vacina?');" class="m-0">
+                                            <input type="hidden" name="id" value="<?= (int) $vacina['id'] ?>">
+                                            <input type="hidden" name="pet_id" value="<?= (int) $petId ?>">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger shadow-sm">
+                                                Remover
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

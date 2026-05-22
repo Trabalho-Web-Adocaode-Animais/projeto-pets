@@ -7,6 +7,9 @@ session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
 
+use Carbon\Carbon;
+Carbon::setlocale('pt-BR');
+
 $rawPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $path = is_string($rawPath) ? $rawPath : '/';
 $path = rtrim($path, '/');
@@ -36,6 +39,7 @@ match ($path) {
     '/pets/status' => $petController->toggleStatus(),
     '/vacinas' => $vaccineController->index(),
     '/vacinas/nova' => $vaccineController->create(),
+    '/vacinas/remover' => $vaccineController->delete(),
     
     default => $petController->home(),
 };
